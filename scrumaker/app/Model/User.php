@@ -18,36 +18,42 @@ class User extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'fullname' => array(
+		'EMAIL' => array(
+			'invalida' => array(
+       		 	'rule' => array('EMAIL', true),
+       		 	'message' => 'Por favor indique una dirección de correo electrónico válida.',
+       		 ),
+			'unico' => array(
+        	 'rule' => 'isUnique',
+        	 'message' => 'Esta dirección de email ya ha sido asignada',
+        	 ),
+    ),
+		'USERNAME' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'rule' => 'notBlank',
+				'rule' => 'isUnique',
+				'message' => 'Este nombre de usuario ya ha sido asignado',
 				//'allowEmpty' => false,
-				//'required' => false,
+				//'required' => true,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'username' => array(
+		'PASSWORD' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+				'rule' => array('notBlank'),
+				               ),
+			'correcta' => array(
+					'rule' => array('custom', '/^[a-z0-9]{3,}$/i'),
+        			'message' => 'Sólo letras y enteros, mínimo 3 caracteres',
+        		),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
-				//'required' => false,
+				//'required' => true,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
-		'password' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
+		
 	);
 	
 	public function beforeSave($options = array())

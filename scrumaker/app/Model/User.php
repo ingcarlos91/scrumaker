@@ -54,7 +54,23 @@ class User extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		
-	);
+		'password_confirm' => array( 
+			'required'=>'notBlank', 
+			'match'=>array( 
+				'rule' => 'PasswordConfirm', 
+				'message' => 'La contraseña no coincide' ),
+				 ),
+		);
+
+
+	function PasswordConfirm($data) 
+	{ 
+		if ($this->data['User']['PASSWORD'] !== $data['password_confirm'])
+		 { 
+		 	return false; 
+		 }
+		  return true; 
+	}
 	
 	public function beforeSave($options = array())
 	{
